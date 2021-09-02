@@ -1,5 +1,9 @@
 <template>
     <div class="tag-input">
+        <input v-model="newTag" type="text"
+            @keydown.enter="addTag(newTag)"
+            @keydown.prevent.tab="addTag(newTag)" 
+        />
         <ul class="tags">
             <li v-for="tag in tags" :key="tag" class="tag">
                 {{ tag }}
@@ -11,26 +15,23 @@
 
 import {ref} from vue
 
-//import { defineComponent } from '@vue/composition-api'
-
-/*
-export default defineComponent({
-    setup() {
-        
-    },
-})
-*/
 export default {
 
     setup(){
-        const tags = ref(['hello', 'world']);
-        return { tags }
+        const tags = ref([]);
+        const newTag = ref('');
+        const addTag = (tag) => {
+            tags.value.push(tag);
+            newTag.value;
+        };
+        return { tags, newTag, addTag };
+
     }
 }
-    
 </script>
 
 <style scoped>
+
 ul {
     list-style: none;
     display:flex;
@@ -47,5 +48,10 @@ ul {
     color: white;
     white-space: nowrap;
     transition: 0.1s ease background;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
 }
 </style>
