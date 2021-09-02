@@ -3,10 +3,12 @@
         <input v-model="newTag" type="text"
             @keydown.enter="addTag(newTag)"
             @keydown.prevent.tab="addTag(newTag)" 
+            @keydown.delete="newTag.length || removeTag(tags.length -1)"
         />
         <ul class="tags">
-            <li v-for="tag in tags" :key="tag" class="tag">
+            <li v-for="(tag, index) in tags" :key="tag" class="tag">
                 {{ tag }}
+                <button class="delete" @click="removeTag(index)">x</button>
             </li>
         </ul>
     </div>
@@ -24,7 +26,10 @@ export default {
             tags.value.push(tag);
             newTag.value;
         };
-        return { tags, newTag, addTag };
+        const removeTag = (index) => {
+            tags.value.splice(index, 1);
+        };
+        return { tags, newTag, addTag, removeTag };
 
     }
 }
@@ -53,5 +58,13 @@ ul {
 input {
     width: 100%;
     padding: 10px;
+}
+
+.delete {
+    color: white;
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
 }
 </style>
