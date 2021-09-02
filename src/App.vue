@@ -1,5 +1,6 @@
 <template>
   <div> 
+    <Blog />
     <TagInput v-model="tags" />
     <ul>
       <li v-for="tag in tags" :key="tag">{{ tag }}</li>
@@ -9,11 +10,13 @@
 
 <script>
 import TagInput from "./components/TagInput.vue";
+import Blog from "./components/Blog.vue";
 
 export default {
   name: 'App',
   components: {
     TagInput: TagInput,
+    Blog: Blog,
   },
   data(){
     return {
