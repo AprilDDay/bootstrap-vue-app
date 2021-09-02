@@ -20,8 +20,11 @@ import {ref, watch, nextTick, onMounted } from vue
 
 export default {
 
-    setup(){
-        const tags = ref([]);
+    props:{
+        modelValue: { type: Array, default: ()=> [] },
+    },
+    setup(props, {emit}){
+        const tags = ref([props.modelValue]);
         const newTag = ref('');
         const addTag = (tag) => {
             tags.value.push(tag);
@@ -36,6 +39,7 @@ export default {
             const extraCushion = 15
             paddingLeft.value = tagsUl.value.clientWidth + extraCushion;
             tagsUl.value.scrollTo(tagsUl.value.scrollWidth, 0);
+            emit("update:modelValue", tags.value)
         };
         watch(tags, ()=>nextTick(onTagsChange), {deep: true});
         onMounted(onTagsChange);
